@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mf.dao.ProductMapper">
+    <resultMap id="baseMap" type="Product">
+        <id property="pid" column="pid"></id>
+        <result property="pname" column="pname"></result>
+        <result property="price" column="price"></result>
+        <result property="fileName" column="fileName"></result>
+    </resultMap>
+    <select id="getAllProduct" resultMap="baseMap">
+        select * from product
+        <if test="pname != null">
+            where pname like concat('%',#{pname},'%')
+        </if>
+        limit #{start},#{pageSize}
+    </select>
+    <select id="getProductCount" parameterType="String" resultType="int">
+        select count(*) from product
+        <if test="_parameter != null">
+            where pname like concat('%',#{pname},'%')
+        </if>
+    </select>
+</mapper>
