@@ -39,6 +39,8 @@
         </tr>
     </c:forEach>
 </table>
+<div><span>总计:${totalMoney}</span></div><br>
+<div><a href="/orders/addOrders">结算</a></div>
 <table>
     <tr>
         <td><a href="/cart/getAllCart?currentPage=1">首页</a></td>

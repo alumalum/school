@@ -19,7 +19,9 @@
     <select id="getCartByUid" resultMap="cartAndProduct">
         select c.*,p.* from cart c,product p
         where c.pid = p.pid and c.uid = #{uid}
-        limit #{start},#{pageSize}
+        <if test="pageSize != 0">
+            limit #{start},#{pageSize}
+        </if>
     </select>
     <select id="getCartCount" parameterType="int" resultType="int">
         select count(*) from cart c,product p

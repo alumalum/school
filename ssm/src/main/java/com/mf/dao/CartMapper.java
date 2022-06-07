@@ -21,4 +21,7 @@ public interface CartMapper {
 
     @Select("select * from cart where uid=#{uid} and pid=#{pid}")
     public Cart getCartByUidAndPid(Cart cart);
+
+    @Delete("delete from cart where uid=#{uid}")
+    public void deleteCartByUid(Integer uid);
 }

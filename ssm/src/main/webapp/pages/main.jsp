@@ -17,11 +17,11 @@
 <c:if test="${sessionScope.user.rid == 1}">
     <a href="/user/getAllUser">用户管理</a><br>
     <a href="/product/getAllProductAdmin">商品管理</a><br>
-    <a>订单管理</a>
+    <a href="/orders/getOrders">订单管理</a>
 </c:if>
 <c:if test="${sessionScope.user.rid == 2}">
     <a href="/user/getUserById?uid=${sessionScope.user.uid}">修改个人信息</a>
-    <a>查看所有订单</a>
+    <a href="/orders/getOrders">查看所有订单</a>
 </c:if>
 </body>
 </html>

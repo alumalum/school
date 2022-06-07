@@ -30,8 +30,13 @@ public class CartController {
         pages.setTotalCount(cartService.getCartCount(user.getUid()));
         pages.setCurrentPage(currentPage);
         List<Cart> cartList = cartService.getCartByUid(user.getUid(), currentPage, pages.getPageSize());
+        double totalMoney = 0;
+        for (Cart c : cartList) {
+            totalMoney += (c.getProduct().getPrice() * c.getQuantity());
+        }
         request.setAttribute("cartList", cartList);
         request.setAttribute("pages", pages);
+        request.setAttribute("totalMoney",totalMoney);
         return "cartList";
     }
 
@@ -46,28 +51,30 @@ public class CartController {
         cartService.addCart(cart);
         return "redirect:/cart/getAllCart";
     }
+
     @RequestMapping("/deleteCart")
-    public String deleteCart(Integer pid,HttpSession session){
+    public String deleteCart(Integer pid, HttpSession session) {
         System.out.println("-----------deleteCart-------------");
-        User user = (User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         Cart cart = new Cart();
         cart.setPid(pid);
         cart.setUid(user.getUid());
         cartService.deleteCart(cart);
         return "redirect:/cart/getAllCart";
     }
+
     @RequestMapping("/updateCartQuantity")
-    public String updateCartQuantity(Integer pid,Integer quantity,HttpSession session){
+    public String updateCartQuantity(Integer pid, Integer quantity, HttpSession session) {
         System.out.println("-----------updateCartQuantity-------------");
-        User user = (User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         Cart cart = new Cart();
         cart.setPid(pid);
         cart.setUid(user.getUid());
         Cart c = cartService.getCartByUidAndPid(cart);
         int num = c.getQuantity();
-        if(num == 1 && quantity == -1){
+        if (num == 1 && quantity == -1) {
             cartService.deleteCart(c);
-        }else {
+        } else {
             c.setQuantity(c.getQuantity() + quantity);
             cartService.updateCartQuantity(c);
         }
