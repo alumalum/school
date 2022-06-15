@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mf.dao.ProductMapper">
+    <resultMap id="baseMap" type="Product">
+        <id property="pid" column="pid"></id>
+        <result property="pname" column="pname"></result>
+        <result property="price" column="price"></result>
+        <result property="fileName" column="fileName"></result>
+        <result property="stock" column="stock"></result>
+    </resultMap>
+    <resultMap id="productSort" type="Product" extends="baseMap">
+        <association property="sort" javaType="Sort">
+            <id property="id" column="id"></id>
+            <result column="name" property="name"></result>
+        </association>
+    </resultMap>
+    <select id="getAllProduct" resultMap="productSort">
+        select * from product p,sort s where p.sortId = s.id
+        <if test="pname != null">
+            and pname like concat('%',#{pname},'%')
+        </if>
+        <if test="sortId != null">
+            and p.sortId = #{sortId}
+        </if>
+        limit #{start},#{pageSize}
+    </select>
+    <select id="getProductCount" resultType="int">
+        select count(*) from product p,sort s where p.sortId = s.id
+        <if test="pname != null">
+            and pname like concat('%',#{pname},'%')
+        </if>
+        <if test="sortId != null">
+            and p.sortId = #{sortId}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mf.dao.FavoritesMapper">
+    <resultMap id="baseMap" type="Favorites">
+        <id property="fid" column="fid"></id>
+        <result column="uid" property="uid"></result>
+        <result property="pid" column="pid"></result>
+        <result column="collectTime" property="collectTime"></result>
+    </resultMap>
+    <resultMap id="favoritesAndProduct" type="Favorites" extends="baseMap">
+        <association property="product" javaType="Product">
+            <result column="price" property="price"></result>
+            <result column="pname" property="pname"></result>
+            <result column="fileName" property="fileName"></result>
+        </association>
+    </resultMap>
+    <select id="getAllFavorites" resultMap="favoritesAndProduct" parameterType="int">
+        select f.*,p.price,p.pname,p.fileName from favorites f,product p where f.pid = p.pid and f.uid = #{uid}
+    </select>
+</mapper>

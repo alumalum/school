@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mf.dao.CartMapper">
+    <resultMap id="baseMap" type="Cart">
+        <id column="cid" property="cid"></id>
+        <result column="uid" property="uid"></result>
+        <result column="quantity" property="quantity"></result>
+    </resultMap>
+    <resultMap id="cartAndProduct" type="Cart" extends="baseMap">
+        <association property="product" javaType="Product">
+            <id column="pid" property="pid"></id>
+            <result column="pname" property="pname"></result>
+            <result column="price" property="price"></result>
+            <result column="fileName" property="fileName"></result>
+        </association>
+    </resultMap>
+    <select id="getCartByUid" resultMap="cartAndProduct">
+        select c.*,p.* from cart c,product p
+        where c.pid = p.pid and c.uid = #{uid}
+        <if test="pageSize != 0">
+            limit #{start},#{pageSize}
+        </if>
+    </select>
+    <select id="getCartCount" parameterType="int" resultType="int">
+        select count(*) from cart c,product p
+        where c.pid = p.pid and c.uid = #{uid}
+    </select>
+</mapper>
