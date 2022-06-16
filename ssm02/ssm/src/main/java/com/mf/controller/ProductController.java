@@ -87,7 +87,7 @@ public class ProductController {
     public String addProduct(Product product, MultipartFile files, HttpServletRequest request) {
         String contexPath = request.getSession().getServletContext().getRealPath("/");
         System.out.println("项目路径" + contexPath);
-        File filePath = new File(contexPath + "uploda\\");
+        File filePath = new File(contexPath + "\\uploda\\");
         System.out.println("文件原名：" + files.getOriginalFilename());
         String fileName = UUID.randomUUID() + "--" + files.getOriginalFilename();
         System.out.println("文件名" + fileName);
@@ -122,7 +122,7 @@ public class ProductController {
         System.out.println("------------updateProduct-------------");
         String contexPath = request.getSession().getServletContext().getRealPath("/");
         System.out.println("项目路径" + contexPath);
-        File filePath = new File(contexPath + "uploda\\");
+        File filePath = new File(contexPath + "\\uploda\\");
         System.out.println("文件原名：" + files.getOriginalFilename());
         String fileName = UUID.randomUUID() + "--" + files.getOriginalFilename();
         System.out.println("文件名" + fileName);

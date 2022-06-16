@@ -9,5 +9,6 @@ public class Product {
     private Double price;
     private String fileName;
     private Integer stock;
+    private Integer sortId;
     private Sort sort;
 }

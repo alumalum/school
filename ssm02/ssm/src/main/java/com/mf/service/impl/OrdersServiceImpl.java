@@ -44,7 +44,7 @@ public class OrdersServiceImpl implements OrdersService {
             ordersDetail.setPname(c.getProduct().getPname());
             ordersDetail.setPrice(c.getProduct().getPrice());
             ordersDetail.setQuantity(c.getQuantity());
-            ordersDetail.setPid(c.getPid());
+            ordersDetail.setPid(c.getProduct().getPid());
             ordersDetailMapper.addOrdersDetail(ordersDetail);
         }
         cartMapper.deleteCartByUid(uid);
